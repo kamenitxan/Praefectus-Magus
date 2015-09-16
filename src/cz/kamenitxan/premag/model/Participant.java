@@ -8,4 +8,5 @@ public class Participant {
 	public String lastName;
 	public String birthDate;
 	public String className;
+	public School school;
 }

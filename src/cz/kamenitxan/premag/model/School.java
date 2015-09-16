@@ -10,4 +10,5 @@ public class School {
 	public String phone;
 	public String fax;
 	public String teacherName;
+
 }
