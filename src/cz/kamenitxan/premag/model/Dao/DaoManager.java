@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import cz.kamenitxan.premag.model.Participant;
 import cz.kamenitxan.premag.model.School;
 import cz.kamenitxan.premag.model.Team;
 import cz.kamenitxan.premag.model.User;
@@ -19,6 +20,7 @@ public class DaoManager {
 	private static Dao<User, Integer> userDao = null;
 	private static Dao<School, Integer> schoolDao = null;
 	private static Dao<Team, Integer> teamDao = null;
+	private static Dao<Participant, Integer> participantDao = null;
 
 	static {
 		try {
@@ -40,6 +42,10 @@ public class DaoManager {
 			if (!teamDao.isTableExists()) {
 				TableUtils.createTable(connectionSource, Team.class);
 			}
+			participantDao = com.j256.ormlite.dao.DaoManager.createDao(connectionSource, Participant.class);
+			if (!participantDao.isTableExists()) {
+				TableUtils.createTable(connectionSource, Participant.class);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -55,5 +61,9 @@ public class DaoManager {
 
 	public static Dao<Team, Integer> getTeamDao() {
 		return teamDao;
+	}
+
+	public static Dao<Participant, Integer> getParticipantDao() {
+		return participantDao;
 	}
 }

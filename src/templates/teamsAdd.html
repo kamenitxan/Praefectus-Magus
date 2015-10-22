@@ -1,0 +1,47 @@
+<div layout:decorator="core" layout:fragment="content">
+	<div id="content-wrapper">
+		<form action="/tymy/pridat" method="post">
+			<h1>Nový tým</h1>
+			<table class="table">
+				<tr>
+					<td>#</td>
+					<td>Jméno</td>
+					<td>Příjmení</td>
+					<td>Datum narození</td>
+					<td>Třída</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td><input type="text" class="form-control" name="firstname1" placeholder="Jméno"/></td>
+					<td><input type="text" class="form-control" name="lastname1" placeholder="Příjmení"/></td>
+					<td><input type="date" class="form-control" name="date1" placeholder="21.4.1999"/></td>
+					<td><input type="text" class="form-control" name="class1" placeholder="sekunda"/></td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><input type="text" class="form-control" name="firstname2" placeholder="Jméno"/></td>
+					<td><input type="text" class="form-control" name="lastname2" placeholder="Příjmení"/></td>
+					<td><input type="date" class="form-control" name="date2" placeholder="21.4.1999"/></td>
+					<td><input type="text" class="form-control" name="class2" placeholder="prima"/></td>
+				</tr>
+			</table>
+			<div class="form-group">
+				<label for="expname">Název pokusu</label>
+				<input type="text" class="form-control" id="expname" name="expname"/>
+			</div>
+			<div class="form-group">
+				<label for="req">Potřebné pomůcky a chemikálie (včetně množství)</label>
+				<input type="text" class="form-control" id="req" name="req"/>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" value="true" name="lunch" />
+					Zajistit oběd
+				</label>
+			</div>
+
+			<button type="submit" class="btn btn-default">Přidat tým</button>
+		</form>
+	</div>
+
+</div>

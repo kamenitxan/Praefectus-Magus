@@ -29,6 +29,8 @@ public class Main {
 		post("/registrace", Register::userRegisterViewPost, new MyTemplateEngine());
 		get("/logout", Login::logOutViewGet, new MyTemplateEngine());
 		get("/profil", Profile::profileViewGet, new MyTemplateEngine());
+		get("/tymy/pridat", Teams::teamAddGet, new MyTemplateEngine());
+		post("/tymy/pridat", Teams::teamAddPost, new MyTemplateEngine());
 		get("/tymy/:year", Teams::teamListGet, new MyTemplateEngine());
 
 		// https://gist.github.com/Wilfred/715ae4e22642cfff1dbd templaty

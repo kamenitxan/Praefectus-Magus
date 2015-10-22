@@ -1,6 +1,7 @@
 <div layout:decorator="core" layout:fragment="content">
 	<div id="content-wrapper">
 		<div class="table-responsive">
+			<a class="btn btn-default" href="/tymy/pridat" role="button">Přidat tým</a>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -16,7 +17,17 @@
 					</tr>
 				</thead>
 				<tbody>
-
+					<tr th:each="team : ${teams}">
+						<td>
+							<span th:text="${team.participant1.getName()}"></span><br />
+							<span th:text="${team.participant2.getName()}"></span>
+						</td>
+						<td th:text="${team.getExperiment()}"></td>
+						<td th:text="${team.getCorrectnessScore()}"></td>
+						<td th:text="${team.getSkillScore()}"></td>
+						<td th:text="${team.getCatchinessScore()}"></td>
+						<td th:text="${team.getTotalScore()}"></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

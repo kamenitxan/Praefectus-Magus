@@ -37,6 +37,7 @@ public class Login {
 		if (BCrypt.checkpw(password, user.getPassword())) {
 			request.session(true);
 			request.session().attribute("useremail", user.getEmail());
+			request.session().attribute("userid", user.getId());
 			return Profile.profileViewGet(request, response);
 		} else {
 			errors.add("Špatné heslo");
@@ -47,6 +48,7 @@ public class Login {
 
 	public static ModelAndView logOutViewGet(Request request, Response response) {
 		request.session().removeAttribute("useremail");
+		request.session().removeAttribute("userid");
 		return new ModelAndView(new HashMap(), "index");
 	}
 

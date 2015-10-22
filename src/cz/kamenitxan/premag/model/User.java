@@ -20,6 +20,9 @@ public class User {
 	private boolean isReferee = false;
 	@DatabaseField
 	private int RefereeNumber = 0;
+	@DatabaseField
+	private boolean isAdmin = false;
+
 
 	public User() {
 	}
@@ -65,13 +68,21 @@ public class User {
 		this.isReferee = isReferee;
 	}
 
-
-
 	public int getRefereeNumber() {
 		return RefereeNumber;
 	}
 
 	public void setRefereeNumber(int refereeNumber) {
 		RefereeNumber = refereeNumber;
+	}
+
+	public MenuItems getMenuItems() {
+		MenuItems mi = new MenuItems();
+		if (isReferee) {
+			mi.referee = true;
+		} else {
+
+		}
+		return mi;
 	}
 }

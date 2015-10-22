@@ -12,9 +12,9 @@ public class Team {
 	private int id = 0;
 	@DatabaseField(foreign = true)
 	private School school;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Participant participant1;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Participant participant2;
 	@DatabaseField
 	private String experiment;
