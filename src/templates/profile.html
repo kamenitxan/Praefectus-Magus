@@ -1,0 +1,12 @@
+<div layout:decorator="core" layout:fragment="content">
+	<div id="content-wrapper">
+		<h1>Profil</h1>
+		<p>Jméno školy: <span th:text="${school.getName()}"></span></p>
+		<p>Adresa školy: <span th:text="${school.getAddress()}"></span></p>
+		<p>Kontaktní jméno: <span th:text="${school.getContactName()}"></span></p>
+		<p>Kontaktní adresa: <span th:text="${school.getContactAddress()}"></span></p>
+		<p>Telefon: <span th:text="${school.getPhone()}"></span></p>
+		<p>Fax: <span th:text="${school.getFax()}"></span></p>
+	</div>
+
+</div>

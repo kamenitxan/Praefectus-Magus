@@ -1,0 +1,42 @@
+<div layout:decorator="core" layout:fragment="content">
+	<div id="content-wrapper">
+		<form action="/registrace" method="post">
+			<h1>Přihlašovací údaje</h1>
+			<div class="form-group">
+				<label for="InputEmail1">Email</label>
+				<input type="email" class="form-control" id="InputEmail1" name="email" placeholder="Email"/>
+			</div>
+			<div class="form-group">
+				<label for="InputPassword1">Heslo</label>
+				<input type="password" class="form-control" id="InputPassword1" name="pass" placeholder="Heslo"/>
+			</div>
+			<h1>Kontaktní údaje</h1>
+			<div class="form-group">
+				<label for="schoolname">Jméno školy</label>
+				<input type="text" class="form-control" id="schoolname" name="schoolname" />
+			</div>
+			<div class="form-group">
+				<label for="schooladdress">Adresa školy</label>
+				<input type="text" class="form-control" id="schooladdress" name="schooladdress" />
+			</div>
+			<div class="form-group">
+				<label for="contactname">Kontaktní jméno</label>
+				<input type="text" class="form-control" id="contactname" name="contactname" />
+			</div>
+			<div class="form-group">
+				<label for="contactaddress">Kontaktní adresa</label>
+				<input type="text" class="form-control" id="contactaddress" name="contactaddress" />
+			</div>
+			<div class="form-group">
+				<label for="tel">Telefon</label>
+				<input type="tel" class="form-control" id="tel" name="tel" />
+			</div>
+			<div class="form-group">
+				<label for="fax">Fax</label>
+				<input type="tel" class="form-control" id="fax" name="fax" />
+			</div>
+			<button type="submit" class="btn btn-default">Odeslat</button>
+		</form>
+	</div>
+
+</div>

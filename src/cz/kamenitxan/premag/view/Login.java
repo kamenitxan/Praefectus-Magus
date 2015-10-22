@@ -1,42 +1,69 @@
 package cz.kamenitxan.premag.view;
 
 import cz.kamenitxan.premag.model.Dao.DaoManager;
+import cz.kamenitxan.premag.model.User;
+import org.mindrot.jbcrypt.BCrypt;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.Objects;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 08.09.15.
  */
 public class Login {
 	public static ModelAndView indexViewGet(Request request, Response response) {
-		return new ModelAndView(null, "index.html");
+		return new ModelAndView(new HashMap(), "index");
 	}
 
 	public static ModelAndView indexViewPost(Request request, Response response) {
-		String userName = request.queryParams("username");
-		String password = request.queryParams("password");
-		String email = request.queryParams("email");
-		
-		return new ModelAndView(null, "index.html");
+		Map<String, Object> data = new HashMap<>();
+		List<String> errors = new ArrayList<>();
+		String userName = request.queryParams("email");
+		String password = request.queryParams("pass");
+		User user = null;
+		try {
+			user = DaoManager.getUserDao().queryBuilder().where().eq("email", userName).queryForFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (user == null) {
+			errors.add("Neexistující uživatel");
+			data.put("errors", errors);
+			return new ModelAndView(data, "index");
+		}
+		if (BCrypt.checkpw(password, user.getPassword())) {
+			request.session(true);
+			request.session().attribute("useremail", user.getEmail());
+			return Profile.profileViewGet(request, response);
+		} else {
+			errors.add("Špatné heslo");
+			data.put("errors", errors);
+			return new ModelAndView(data, "index");
+		}
 	}
 
-	public static ModelAndView userRegisterViewGet(Request request, Response response) {
-		return new ModelAndView(null, "register.html");
+	public static ModelAndView logOutViewGet(Request request, Response response) {
+		request.session().removeAttribute("useremail");
+		return new ModelAndView(new HashMap(), "index");
 	}
 
-	public static ModelAndView userRegisterViewPost(Request request, Response response) {
-		return new ModelAndView(null, "index.html");
-	}
 
 	public static boolean isAuthenticated(Request request, Response response) {
-		if (!Objects.equals(request.pathInfo(), "/") || !Objects.equals(request.pathInfo(), "/registrace")) {
-			request.session().attribute("auth");
-			if (request.session().attribute("auth") == null) {
-				return false;
-			} else return request.session().attribute("auth").equals(true);
+		//request.session().attribute("auth");
+		if (request.session().attribute("useremail") == null) {
+			return false;
+		} else return true;
+
+	}
+
+	public static boolean isProtected(Request request) {
+		String path = request.pathInfo();
+		System.out.println(request.pathInfo());
+		if (path.equals("/") || path.equals("/registrace") || path.contains("/static")) {
+			return false;
 		} else {
 			return true;
 		}

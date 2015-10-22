@@ -1,24 +1,32 @@
 package cz.kamenitxan.premag;
 
 import cz.kamenitxan.premag.view.Login;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import cz.kamenitxan.premag.view.Profile;
+import cz.kamenitxan.premag.view.Register;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
+import templates.MyTemplateEngine;
 
 import static spark.Spark.*;
 
 public class Main {
 	public static void main(String[] args) {
-        //staticFileLocation("/META-INF/static");
+        staticFileLocation("/templates/resources");
 
 		before((request, response) -> {
-			if (Login.isAuthenticated(request, response)) {
-				halt(401, "Neplatné přihlášení");
+			if (Login.isProtected(request)) {
+				if (!Login.isAuthenticated(request, response)) {
+					response.redirect("/", 302);
+					halt();
+				}
 			}
 		});
 
-		get("/", Login::indexViewGet, new HandlebarsTemplateEngine());
-		post("/", Login::indexViewPost, new HandlebarsTemplateEngine());
-		get("/registrace", Login::userRegisterViewGet, new HandlebarsTemplateEngine());
-		post("/registrace", Login::userRegisterViewPost, new HandlebarsTemplateEngine());
+		get("/", Login::indexViewGet, new MyTemplateEngine());
+		post("/", Login::indexViewPost, new MyTemplateEngine());
+		get("/registrace", Register::userRegisterViewGet, new MyTemplateEngine());
+		post("/registrace", Register::userRegisterViewPost, new MyTemplateEngine());
+		get("/logout", Login::logOutViewGet, new MyTemplateEngine());
+		get("/profil", Profile::profileViewGet, new MyTemplateEngine());
 
 		// https://gist.github.com/Wilfred/715ae4e22642cfff1dbd templaty
 

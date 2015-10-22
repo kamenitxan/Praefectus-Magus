@@ -11,8 +11,6 @@ public class User {
 	@DatabaseField(generatedId = true)
 	private int id = 0;
 	@DatabaseField
-	private String userName;
-	@DatabaseField
 	private String password;
 	@DatabaseField
 	private String email;
@@ -21,15 +19,12 @@ public class User {
 	@DatabaseField
 	private boolean isReferee = false;
 	@DatabaseField
-	private Year RefereeYear = null;
-	@DatabaseField
 	private int RefereeNumber = 0;
 
 	public User() {
 	}
 
-	public User(String userName, String password, String email) {
-		this.userName = userName;
+	public User(String email, String password) {
 		this.password = password;
 		this.email = email;
 	}
@@ -40,14 +35,6 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -82,13 +69,7 @@ public class User {
 		this.isReferee = isReferee;
 	}
 
-	public Year getRefereeYear() {
-		return RefereeYear;
-	}
 
-	public void setRefereeYear(Year refereeYear) {
-		RefereeYear = refereeYear;
-	}
 
 	public int getRefereeNumber() {
 		return RefereeNumber;
