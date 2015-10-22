@@ -6,6 +6,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import cz.kamenitxan.premag.model.School;
+import cz.kamenitxan.premag.model.Team;
 import cz.kamenitxan.premag.model.User;
 
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ public class DaoManager {
 	private static final String databaseUrl = "jdbc:sqlite:pokuston.db";
 	private static Dao<User, Integer> userDao = null;
 	private static Dao<School, Integer> schoolDao = null;
+	private static Dao<Team, Integer> teamDao = null;
 
 	static {
 		try {
@@ -34,6 +36,10 @@ public class DaoManager {
 			if (!schoolDao.isTableExists()) {
 				TableUtils.createTable(connectionSource, School.class);
 			}
+			teamDao = com.j256.ormlite.dao.DaoManager.createDao(connectionSource, Team.class);
+			if (!teamDao.isTableExists()) {
+				TableUtils.createTable(connectionSource, Team.class);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -45,5 +51,9 @@ public class DaoManager {
 
 	public static Dao<School, Integer> getSchoolDao() {
 		return schoolDao;
+	}
+
+	public static Dao<Team, Integer> getTeamDao() {
+		return teamDao;
 	}
 }
