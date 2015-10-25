@@ -83,4 +83,30 @@ public class Teams {
 		return new ModelAndView(data, "teamsAdd");
 	}
 
+
+	/** RESULTS *******************************************************************************************************/
+
+	public static ModelAndView resultListGet(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		String yearS = request.queryParams("rok");
+		if (yearS == null) {
+			yearS = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		}
+		List<Team> teams = null;
+		List<Team> years = null;
+		try {
+			final School school =  DaoManager.getSchoolDao().queryBuilder().where().eq("user_id", request.session().attribute("userid")).queryForFirst();
+			teams = DaoManager.getTeamDao().queryBuilder().where()
+					.eq("year", Integer.valueOf(yearS)).and().eq("school_id", school.getId()).query();
+			years = DaoManager.getTeamDao().queryBuilder().distinct().selectColumns("year").query();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		data.put("years", years);
+		data.put("selected", yearS);
+		data.put("teams", teams);
+		return new ModelAndView(data, "results");
+	}
+
 }

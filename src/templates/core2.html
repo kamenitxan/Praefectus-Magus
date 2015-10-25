@@ -25,23 +25,7 @@
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li>
-					<a href="/profil">Profil</a>
-				</li>
-				<li>
-					<a href="/vysledky">Výsledky soutěže</a>
-				</li>
-				<li th:if="${menu != null and menu.admin == true}">
-					<a href="#">Admin</a>
-				</li>
-				<li th:if="${menu != null and menu.referee == true}">
-					<a href="#">Hodnocení</a>
-				</li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/logout">Odhlásit se</a></li>
-			</ul>
+			<ul class="nav navbar-nav"></ul>
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>

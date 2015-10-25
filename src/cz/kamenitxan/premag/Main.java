@@ -4,7 +4,6 @@ import cz.kamenitxan.premag.view.Login;
 import cz.kamenitxan.premag.view.Profile;
 import cz.kamenitxan.premag.view.Register;
 import cz.kamenitxan.premag.view.Teams;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import templates.MyTemplateEngine;
 
 import static spark.Spark.*;
@@ -32,6 +31,8 @@ public class Main {
 		get("/tymy/pridat", Teams::teamAddGet, new MyTemplateEngine());
 		post("/tymy/pridat", Teams::teamAddPost, new MyTemplateEngine());
 		get("/tymy/:year", Teams::teamListGet, new MyTemplateEngine());
+		get("/vysledky/:year", Teams::resultListGet, new MyTemplateEngine());
+		get("/vysledky", Teams::resultListGet, new MyTemplateEngine());
 
 		// https://gist.github.com/Wilfred/715ae4e22642cfff1dbd templaty
 

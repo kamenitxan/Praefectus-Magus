@@ -24,6 +24,7 @@ public class Profile {
 			e.printStackTrace();
 		}
 		data.put("school", school);
+		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "profile");
 	}
 }

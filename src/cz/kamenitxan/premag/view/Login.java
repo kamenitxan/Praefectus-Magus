@@ -38,6 +38,9 @@ public class Login {
 			request.session(true);
 			request.session().attribute("useremail", user.getEmail());
 			request.session().attribute("userid", user.getId());
+			request.session().attribute("ir", user.isReferee());
+			request.session().attribute("ia", user.isAdmin());
+
 			return Profile.profileViewGet(request, response);
 		} else {
 			errors.add("Špatné heslo");

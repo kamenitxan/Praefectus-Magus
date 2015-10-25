@@ -2,6 +2,7 @@ package cz.kamenitxan.premag.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import spark.Request;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 16.09.15.
@@ -15,7 +16,7 @@ public class User {
 	@DatabaseField
 	private String email;
 	@DatabaseField
-	private boolean enabled;
+	private boolean enabled = false;
 	@DatabaseField
 	private boolean isReferee = false;
 	@DatabaseField
@@ -76,12 +77,21 @@ public class User {
 		RefereeNumber = refereeNumber;
 	}
 
-	public MenuItems getMenuItems() {
-		MenuItems mi = new MenuItems();
-		if (isReferee) {
-			mi.referee = true;
-		} else {
+	public boolean isAdmin() {
+		return isAdmin;
+	}
 
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public static MenuItems getMenuItems(Request request) {
+		MenuItems mi = new MenuItems();
+		if (request.session().attribute("ir")) {
+			mi.referee = true;
+		}
+		if (request.session().attribute("ia")) {
+			mi.admin = true;
 		}
 		return mi;
 	}
