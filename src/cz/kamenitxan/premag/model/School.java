@@ -11,21 +11,21 @@ public class School {
 	@DatabaseField(generatedId = true)
 	private int Id;
 	@DatabaseField
-	private String name;
+	private String name = "";
 	@DatabaseField
-	private String address;
+	private String address = "";
 	@DatabaseField
-	private String email;
+	private String email = "";
 	@DatabaseField
-	private String contactName;
+	private String contactName = "";
 	@DatabaseField
-	private String contactAddress;
+	private String contactAddress = "";
 	@DatabaseField
-	private String phone;
+	private String phone = "";
 	@DatabaseField
-	private String fax;
-	@DatabaseField(foreign = true)
-	private User user;
+	private String fax = "";
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
+	private User user = null;
 
 	public School() {
 	}

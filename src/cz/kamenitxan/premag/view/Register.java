@@ -9,6 +9,7 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,10 +58,35 @@ public class Register {
 
 		try {
 			DaoManager.getSchoolDao().create(school);
+			data.put("mgs", new ArrayList<String>(){{add("Účet by úšpěšně vytvořen. ");}});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return new ModelAndView(data, "index");
 	}
+
+	/*public static ModelAndView verifyGet(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		String token = request.params(":token");
+		User user = null;
+		try {
+			user = DaoManager.getUserDao().queryBuilder().where().eq("verification", token).queryForFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (user != null) {
+			data.put("mgs", new ArrayList<String>(){{add("Účet by úšpěšně ověřen.");}});
+			user.setEnabled(true);
+			try {
+				DaoManager.getUserDao().update(user);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			data.put("errors", new ArrayList<String>(){{add("Neplatný ověřovací kód.");}});
+		}
+
+		return new ModelAndView(data, "index");
+	}*/
 }

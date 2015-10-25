@@ -4,6 +4,7 @@ import cz.kamenitxan.premag.model.Dao.DaoManager;
 import cz.kamenitxan.premag.model.Participant;
 import cz.kamenitxan.premag.model.School;
 import cz.kamenitxan.premag.model.Team;
+import cz.kamenitxan.premag.model.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -31,11 +32,13 @@ public class Teams {
 			e.printStackTrace();
 		}
 		data.put("teams", teams);
+		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "teams");
 	}
 
 	public static ModelAndView teamAddGet(Request request, Response response) {
 		Map<String, Object> data = new HashMap<>();
+		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "teamsAdd");
 	}
 
@@ -79,7 +82,7 @@ public class Teams {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "teamsAdd");
 	}
 
@@ -106,6 +109,7 @@ public class Teams {
 		data.put("years", years);
 		data.put("selected", yearS);
 		data.put("teams", teams);
+		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "results");
 	}
 

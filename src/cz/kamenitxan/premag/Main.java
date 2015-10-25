@@ -1,9 +1,6 @@
 package cz.kamenitxan.premag;
 
-import cz.kamenitxan.premag.view.Login;
-import cz.kamenitxan.premag.view.Profile;
-import cz.kamenitxan.premag.view.Register;
-import cz.kamenitxan.premag.view.Teams;
+import cz.kamenitxan.premag.view.*;
 import templates.MyTemplateEngine;
 
 import static spark.Spark.*;
@@ -33,6 +30,12 @@ public class Main {
 		get("/tymy/:year", Teams::teamListGet, new MyTemplateEngine());
 		get("/vysledky/:year", Teams::resultListGet, new MyTemplateEngine());
 		get("/vysledky", Teams::resultListGet, new MyTemplateEngine());
+
+		get("/admin", Admin::dashboardGet, new MyTemplateEngine());
+		get("/admin/uzivatele", Admin::usersGet, new MyTemplateEngine());
+		get("/admin/uzivatele/smazat", Admin::userDeleteGet, new MyTemplateEngine());
+
+		//get("/verify/:token", Register::verifyGet, new MyTemplateEngine());
 
 		// https://gist.github.com/Wilfred/715ae4e22642cfff1dbd templaty
 

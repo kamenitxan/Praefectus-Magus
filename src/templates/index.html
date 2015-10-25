@@ -1,8 +1,11 @@
 <div layout:decorator="core2" layout:fragment="content">
 	<div id="content-wrapper">
 		<p th:if="${not #lists.isEmpty(errors)}">
-		<ul id="rez_errors">
+		<ul>
 			<li th:each="err : ${errors}" th:text="${err}" class="bg-danger"></li>
+		</ul>
+		<ul>
+			<li th:each="m : ${mgs}" th:text="${err}" class="bg-success"></li>
 		</ul>
 		</p>
 		<div class="text-center">

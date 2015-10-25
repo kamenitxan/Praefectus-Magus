@@ -1,0 +1,33 @@
+<div layout:decorator="core" layout:fragment="content">
+	<div id="content-wrapper">
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>Název</td>
+						<td>Adresa</td>
+						<td>Kontaktní jméno</td>
+						<td>Kontaktní adresa</td>
+						<td>Email</td>
+						<td>Telefon</td>
+						<td>Fax</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="school : ${schools}">
+						<td th:text="${school.getName()}"></td>
+						<td th:text="${school.getAddress()}"></td>
+						<td th:text="${school.getContactName()}"></td>
+						<td th:text="${school.getContactAddress()}"></td>
+						<td th:text="${school.getEmail()}"></td>
+						<td th:text="${school.getPhone()}"></td>
+						<td th:text="${school.getFax()}"></td>
+						<td><a th:href="${'/admin/uzivatele/smazat?idU=' + school.getUser().getId() + '&amp;idS=' + school.getId()}" class="btn btn-danger">Smazat uživatele</a> </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>

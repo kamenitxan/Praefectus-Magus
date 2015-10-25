@@ -4,6 +4,9 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import spark.Request;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 16.09.15.
  */
@@ -23,6 +26,8 @@ public class User {
 	private int RefereeNumber = 0;
 	@DatabaseField
 	private boolean isAdmin = false;
+	@DatabaseField
+	private String verification = "";
 
 
 	public User() {
@@ -31,6 +36,18 @@ public class User {
 	public User(String email, String password) {
 		this.password = password;
 		this.email = email;
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (byte aByteData : byteData) {
+				sb.append(Integer.toString((aByteData & 0xff) + 0x100, 16).substring(1));
+			}
+			this.verification = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			this.verification = "verf" + email.length();
+		}
 	}
 
 	public int getId() {
@@ -83,6 +100,10 @@ public class User {
 
 	public void setIsAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public String getVerification() {
+		return verification;
 	}
 
 	public static MenuItems getMenuItems(Request request) {
