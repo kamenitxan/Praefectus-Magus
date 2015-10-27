@@ -1,0 +1,43 @@
+<div layout:decorator="core" layout:fragment="content">
+	<div id="content-wrapper">
+		<div class="table-responsive">
+			<a href="/admin/uzivatele" class="btn btn-default">Zpět na seznam uživatelů</a><br />
+			<form action="/admin/uzivatele/tymy" method="get" >
+				Ročník soutěže:
+				<select name="rok" size="1"  onchange="if(this.value != 0) { this.form.submit(); }">
+					 <option value="" th:each="t : ${years}" th:text="${t.year}" th:value="${t.year}" th:selected="${t.year == selected}"></option>
+				</select>
+				<input type="hidden" th:value="${schoolId}" name="schoolId"/>
+			</form>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td rowspan="2">Vystupující</td>
+						<td rowspan="2">Název pokusu</td>
+						<td colspan="3">Hodnocení</td>
+						<td rowspan="2">Celkem</td>
+					</tr>
+					<tr>
+						<td>Správnost výkladu</td>
+						<td>Zručnost</td>
+						<td>Poutavost</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="team : ${teams}">
+						<td>
+							<span th:text="${team.participant1.getName()}"></span><br />
+							<span th:text="${team.participant2.getName()}"></span>
+						</td>
+						<td th:text="${team.getExperiment()}"></td>
+						<td th:text="${team.getCorrectnessScore()}"></td>
+						<td th:text="${team.getSkillScore()}"></td>
+						<td th:text="${team.getCatchinessScore()}"></td>
+						<td th:text="${team.getTotalScore()}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>

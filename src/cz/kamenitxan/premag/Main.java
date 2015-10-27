@@ -34,6 +34,7 @@ public class Main {
 		get("/admin", Admin::dashboardGet, new MyTemplateEngine());
 		get("/admin/uzivatele", Admin::usersGet, new MyTemplateEngine());
 		get("/admin/uzivatele/smazat", Admin::userDeleteGet, new MyTemplateEngine());
+		get("/admin/uzivatele/tymy", Admin::userTeamsGet, new MyTemplateEngine());
 
 		//get("/verify/:token", Register::verifyGet, new MyTemplateEngine());
 
