@@ -1,1 +1,4 @@
-+ user : verification
++ user : verification - BOOLEAN
+// done
++ team : entryOrder - INTEGER
+// done

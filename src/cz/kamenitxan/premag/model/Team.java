@@ -30,6 +30,8 @@ public class Team {
 	private int skillScore;
 	@DatabaseField
 	private int catchinessScore;
+	@DatabaseField
+	private int entryOrder;
 
 	public Team() {
 	}
@@ -121,5 +123,13 @@ public class Team {
 
 	public void setCatchinessScore(int catchinessScore) {
 		this.catchinessScore = catchinessScore;
+	}
+
+	public int getEntryOrder() {
+		return entryOrder;
+	}
+
+	public void setEntryOrder(int entryOrder) {
+		this.entryOrder = entryOrder;
 	}
 }

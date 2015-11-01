@@ -1,7 +1,15 @@
 <div layout:decorator="core" layout:fragment="content">
 	<div id="content-wrapper">
+		<ul>
+			<li th:each="err : ${errors}" th:text="${err}" class="bg-danger"></li>
+		</ul>
+		<a href="/profil" class="btn btn-default">Zpět</a><br />
 		<form action="/tymy/pridat" method="post">
 			<h1>Nový tým</h1>
+			<div class="form-group">
+				<label for="order">Pořadí</label>
+				<input type="number" class="form-control" id="order" name="order"/>
+			</div>
 			<table class="table">
 				<tr>
 					<td>#</td>

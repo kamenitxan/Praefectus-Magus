@@ -78,4 +78,27 @@ public class Admin {
 		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "admin/userTeams");
 	}
+
+	public static ModelAndView teamsGet(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		String yearS = request.queryParams("rok");
+		if (yearS == null) {
+			yearS = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		}
+		List<Team> teams = null;
+		List<Team> years = null;
+		try {
+			teams = DaoManager.getTeamDao().queryBuilder().where()
+					.eq("year", Integer.valueOf(yearS)).query();
+			years = DaoManager.getTeamDao().queryBuilder().distinct().selectColumns("year").query();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		data.put("years", years);
+		data.put("selected", yearS);
+		data.put("teams", teams);
+		data.put("menu", User.getMenuItems(request));
+		return new ModelAndView(data, "admin/participants");
+	}
 }

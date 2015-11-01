@@ -27,7 +27,8 @@ public class Main {
 		get("/profil", Profile::profileViewGet, new MyTemplateEngine());
 		get("/tymy/pridat", Teams::teamAddGet, new MyTemplateEngine());
 		post("/tymy/pridat", Teams::teamAddPost, new MyTemplateEngine());
-		get("/tymy/:year", Teams::teamListGet, new MyTemplateEngine());
+		get("/tymy", Teams::teamListGet, new MyTemplateEngine());
+		post("/tymy", Teams::teamListPost, new MyTemplateEngine());
 		get("/vysledky/:year", Teams::resultListGet, new MyTemplateEngine());
 		get("/vysledky", Teams::resultListGet, new MyTemplateEngine());
 
@@ -35,6 +36,7 @@ public class Main {
 		get("/admin/uzivatele", Admin::usersGet, new MyTemplateEngine());
 		get("/admin/uzivatele/smazat", Admin::userDeleteGet, new MyTemplateEngine());
 		get("/admin/uzivatele/tymy", Admin::userTeamsGet, new MyTemplateEngine());
+		get("/admin/tymy", Admin::teamsGet, new MyTemplateEngine());
 
 		//get("/verify/:token", Register::verifyGet, new MyTemplateEngine());
 
