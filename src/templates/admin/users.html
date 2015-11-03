@@ -25,7 +25,7 @@
 						<td th:text="${school.getPhone()}"></td>
 						<td th:text="${school.getFax()}"></td>
 						<td><a th:href="${'/admin/uzivatele/tymy?schoolId=' + school.getId()}" class="btn btn-default">Soutěžící</a>
-							<a th:href="${'/admin/uzivatele/smazat?idU=' + school.getUser().getId() + '&amp;idS=' + school.getId()}" class="btn btn-danger">Smazat uživatele</a> </td>
+							<a th:href="${'/admin/uzivatele/smazat?idU=' + school.getUser().getId() + '&amp;idS=' + school.getId()}" class="btn btn-danger" onclick="return confirm('Opravdu smazat uživatele?')">Smazat uživatele</a> </td>
 					</tr>
 				</tbody>
 			</table>
