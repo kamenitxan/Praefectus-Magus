@@ -29,6 +29,8 @@ public class Main {
 		post("/tymy/pridat", Teams::teamAddPost, new MyTemplateEngine());
 		get("/tymy", Teams::teamListGet, new MyTemplateEngine());
 		post("/tymy", Teams::teamListPost, new MyTemplateEngine());
+		get("/tymy/tisk", Teams::teamPrintGet, new MyTemplateEngine());
+
 		get("/vysledky/:year", Teams::resultListGet, new MyTemplateEngine());
 		get("/vysledky", Teams::resultListGet, new MyTemplateEngine());
 

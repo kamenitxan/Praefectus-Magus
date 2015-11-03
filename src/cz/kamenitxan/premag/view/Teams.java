@@ -59,6 +59,27 @@ public class Teams {
 		return teamListGet(request, response);
 	}
 
+	public static ModelAndView teamPrintGet(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		String yearS = request.queryParams("rok");
+		if (yearS == null) {
+			yearS = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		}
+		School school = null;
+		List<Team> teams = null;
+		try {
+			school =  DaoManager.getSchoolDao().queryBuilder().where().eq("user_id", request.session().attribute("userid")).queryForFirst();
+			teams = DaoManager.getTeamDao().queryBuilder().orderBy("entryOrder", true).where()
+					.eq("year", yearS).and().eq("school_id", school.getId()).query();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		data.put("school", school);
+		data.put("teams", teams);
+		return new ModelAndView(data, "teamsPrint");
+	}
+
 	public static ModelAndView teamAddGet(Request request, Response response) {
 		Map<String, Object> data = new HashMap<>();
 		data.put("menu", User.getMenuItems(request));

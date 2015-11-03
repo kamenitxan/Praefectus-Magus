@@ -8,7 +8,7 @@
 				</select>
 				<input type="hidden" th:value="${schoolId}" name="schoolId"/>
 			</form>
-			<a class="btn btn-default" href="/tymy/pridat" role="button">Přidat tým</a>
+			<a class="btn btn-default" href="/tymy/pridat" role="button">Přidat tým</a><br /><br />
 			<form action="/tymy" method="post" >
 				<input type="hidden" th:value="${teams.size()}" name="pocet" />
 				<input type="hidden" th:value="${selected}" name="rok"/>
@@ -54,8 +54,9 @@
 
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-default" value="Upravit pořadí"/>
+				<input type="submit" class="btn btn-default" value="Upravit pořadí"/><br /><br />
 			</form>
+			<a th:href="${'/tymy/tisk?rok=' + selected}" class="btn btn-default" >Tisk výsledkové listiny</a>
 		</div>
 	</div>
 

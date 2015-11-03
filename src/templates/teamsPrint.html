@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml">
+<head lang="en">
+	<meta charset="UTF-8" />
+	<title>Výsledková listina</title>
+	<style>
+		table {
+			border-collapse:collapse;
+			border: 1px solid black;
+			text-align: center;
+		}
+		td {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		thead tr {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+<center>
+	<h1>Výsledková listina</h1>
+	<h2>školního kola soutěže „O klobouk kouzelníka Pokustóna“</h2>
+</center>
+<div>
+	<p th:text="${'Škola: ' + school.getName()}"></p>
+	<p th:text="${'Adresa: ' + school.getAddress()}"></p>
+	<p th:text="${'Email: ' + school.getEmail()}"></p>
+	<p th:text="${'Telefon: ' + school.getPhone()}"></p>
+	<p th:text="${'Fax: ' + school.getFax()}"></p>
+</div>
+<table class="table table-bordered" th:if="${not #lists.isEmpty(teams)}" >
+	<thead>
+	<tr>
+		<td>Pořadí</td>
+		<td>Vystupující</td>
+		<td>Datum narození</td>
+		<td>Třída</td>
+		<td>Název pokusu</td>
+		<td>Potřebné pomůcky a chemikálie</td>
+		<td>Zajistit oběd</td>
+	</tr>
+	</thead>
+	<tbody>
+		<tr th:each="team : ${teams}">
+			<td>
+				<span th:text="${team.getEntryOrder()}" ></span>
+			</td>
+			<td>
+				<span th:text="${team.participant1.getName()}"></span><br />
+				<span th:text="${team.participant2.getName()}"></span>
+			</td>
+			<td>
+				<span th:text="${team.participant1.getBirthDate()}"></span><br />
+				<span th:text="${team.participant2.getBirthDate()}"></span>
+			</td>
+			<td>
+				<span th:text="${team.participant1.getClassName()}"></span><br />
+				<span th:text="${team.participant2.getClassName()}"></span>
+			</td>
+			<td th:text="${team.getExperiment()}"></td>
+			<td th:text="${team.getRequirments()}"></td>
+			<td>
+				<span th:if="${team.isLunch()}">Ano</span>
+				<span th:if="${!team.isLunch()}">Ne</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<center>
+	<p>
+		(Informace o pomůckách a obědě požadujeme proto, abychom je v případě vybrání soutěžících měli pohotově k dispozici).
+	</p>
+	<p>
+		<b>Do finále postupují jednotliví soutěžící nebo soutěžící dvojice uvedení na prvních třech místech!</b>
+	</p>
+</center>
+</body>
+</html>
