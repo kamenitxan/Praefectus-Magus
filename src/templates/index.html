@@ -1,12 +1,14 @@
 <div layout:decorator="core2" layout:fragment="content">
 	<div id="content-wrapper">
 		<p th:if="${not #lists.isEmpty(errors)}">
-		<ul>
-			<li th:each="err : ${errors}" th:text="${err}" class="bg-danger"></li>
-		</ul>
-		<ul>
-			<li th:each="m : ${mgs}" th:text="${err}" class="bg-success"></li>
-		</ul>
+			<ul>
+				<li th:each="err : ${errors}" th:text="${err}" class="bg-danger"></li>
+			</ul>
+		</p>
+		<p th:if="${not #lists.isEmpty(mgs)}">
+			<ul>
+				<li th:each="m : ${mgs}" th:text="${m}" class="bg-success"></li>
+			</ul>
 		</p>
 		<div class="text-center">
 			<img src="/static/img/kamlogo.gif" />

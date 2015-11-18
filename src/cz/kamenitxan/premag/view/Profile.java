@@ -16,6 +16,10 @@ import java.util.Map;
  */
 public class Profile {
 	public static ModelAndView profileViewGet(Request request, Response response) {
+		return new ModelAndView(profileGetData(request), "profile");
+	}
+
+	public static Map<String, Object> profileGetData(Request request) {
 		Map<String, Object> data = new HashMap<>();
 		School school = null;
 		try {
@@ -25,6 +29,6 @@ public class Profile {
 		}
 		data.put("school", school);
 		data.put("menu", User.getMenuItems(request));
-		return new ModelAndView(data, "profile");
+		return data;
 	}
 }

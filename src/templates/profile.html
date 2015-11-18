@@ -1,5 +1,16 @@
 <div layout:decorator="core" layout:fragment="content">
 	<div id="content-wrapper">
+		<p th:if="${not #lists.isEmpty(errors)}">
+		<ul>
+			<li th:each="err : ${errors}" th:text="${err}" class="bg-danger"></li>
+		</ul>
+		</p>
+		<p th:if="${not #lists.isEmpty(mgs)}">
+		<ul>
+			<li th:each="m : ${mgs}" th:text="${m}" class="bg-success"></li>
+		</ul>
+		</p>
+
 		<h1>Profil</h1>
 		<p>Název školy dle zřizovací listiny: <span th:text="${school.getName()}"></span></p>
 		<p>Adresa školy: <span th:text="${school.getAddress()}"></span></p>
@@ -8,9 +19,27 @@
 		<p>Telefon: <span th:text="${school.getPhone()}"></span></p>
 		<p>Fax: <span th:text="${school.getFax()}"></span></p>
 
+
 		<div>
 			<a href="/tymy" class="btn btn-default">Seznam týmů</a>
 		</div>
+		<br /><br /><br />
+		<form method="post" action="/profil/noveheslo">
+			<h2>Změna hesla</h2>
+			<div class="form-group">
+				<label for="InputPassword4">Aktuální heslo</label>
+				<input type="password" class="form-control" id="InputPassword4" name="passOld" placeholder="Aktuální heslo"/>
+			</div>
+			<div class="form-group">
+				<label for="InputPassword2">Nové heslo</label>
+				<input type="password" class="form-control" id="InputPassword2" name="pass" placeholder="Nové heslo"/>
+			</div>
+			<div class="form-group">
+				<label for="InputPassword3">Potvrzení hesla</label>
+				<input type="password" class="form-control" id="InputPassword3" name="pass2" placeholder="Potvrzení hesla"/>
+			</div>
+			<input type="submit" class="btn btn-default" value="Změnit heslo" />
+		</form>
 	</div>
 
 </div>

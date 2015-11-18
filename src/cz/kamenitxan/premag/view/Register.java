@@ -66,6 +66,42 @@ public class Register {
 		return new ModelAndView(data, "index");
 	}
 
+	public static ModelAndView changePassPost(Request request, Response response) {
+		// $2a$10$0rCUUET/RNsRt9ST7z93yeMKwjlCHXSXbvO8CbaQ60ZHq3J47VDxm
+		Map<String, Object> data = Profile.profileGetData(request);
+
+		User user = null;
+		try {
+			user = DaoManager.getUserDao().queryBuilder().where().eq("email", request.session().attribute("useremail")).queryForFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		String oldPass = request.queryParams("passOld");
+		String new1 = request.queryParams("pass");
+		String new2 = request.queryParams("pass2");
+		if (new1.equals(new2) && new1.length() > 0) {
+			if (BCrypt.checkpw(oldPass, user.getPassword())) {
+				String hashed = BCrypt.hashpw(new1 , BCrypt.gensalt());
+				user.setPassword(hashed);
+				try {
+					DaoManager.getUserDao().update(user);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				data.put("mgs", new ArrayList<String>(){{add("Heslo změněno");}});
+				return new ModelAndView(data, "profile");
+			} else {
+				data.put("errors", new ArrayList<String>(){{add("Špatné aktuální heslo");}});
+				return new ModelAndView(data, "profile");
+			}
+
+		} else {
+			data.put("errors", new ArrayList<String>(){{add("Hesla se neschodují ");}});
+		}
+		return new ModelAndView(data, "profile");
+	}
+
 	/*public static ModelAndView verifyGet(Request request, Response response) {
 		Map<String, Object> data = new HashMap<>();
 		String token = request.params(":token");

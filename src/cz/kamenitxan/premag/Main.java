@@ -25,6 +25,7 @@ public class Main {
 		post("/registrace", Register::userRegisterViewPost, new MyTemplateEngine());
 		get("/logout", Login::logOutViewGet, new MyTemplateEngine());
 		get("/profil", Profile::profileViewGet, new MyTemplateEngine());
+		post("/profil/noveheslo", Register::changePassPost, new MyTemplateEngine());
 		get("/tymy/pridat", Teams::teamAddGet, new MyTemplateEngine());
 		post("/tymy/pridat", Teams::teamAddPost, new MyTemplateEngine());
 		get("/tymy", Teams::teamListGet, new MyTemplateEngine());
