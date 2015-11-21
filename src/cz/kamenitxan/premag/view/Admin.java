@@ -2,8 +2,10 @@ package cz.kamenitxan.premag.view;
 
 import cz.kamenitxan.premag.model.Dao.DaoManager;
 import cz.kamenitxan.premag.model.School;
+import cz.kamenitxan.premag.model.SettingHelper;
 import cz.kamenitxan.premag.model.Team;
 import cz.kamenitxan.premag.model.User;
+import cz.kamenitxan.premag.model.Settings;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -18,6 +20,29 @@ public class Admin {
 	public static ModelAndView dashboardGet(Request request, Response response) {
 		Map<String, Object> data = new HashMap<>();
 		data.put("menu", User.getMenuItems(request));
+		data.put("settings", SettingHelper.getInstance());
+
+		return new ModelAndView(data, "admin/dashboard");
+	}
+
+	public static ModelAndView dashboardPost(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("menu", User.getMenuItems(request));
+
+		boolean teams = "checked".equals(request.queryParams("teamEdit"));
+		boolean ref = "checked".equals(request.queryParams("refereeEnabled"));
+
+		Settings s = SettingHelper.getInstance();
+		s.setTeamsEdit(teams);
+		s.setRefereeEnabled(ref);
+
+		try {
+			DaoManager.getSettingsDao().update(s);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		data.put("settings", s);
 
 		return new ModelAndView(data, "admin/dashboard");
 	}

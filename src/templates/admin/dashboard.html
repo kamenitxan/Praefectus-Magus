@@ -6,6 +6,22 @@
 			<a class="btn btn-default" href="" role="button">Zahájit hodnocení</a>
 			<a class="btn btn-default" href="/admin/tymy" role="button">Seznam soutěžících</a>
 		</div>
+		<div>
+			<h2>Nastavení</h2>
+			<form method="post" action="/admin">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="teamEdit" value="checked" th:checked="${settings.isTeamsEdit()}" /> Zapnout úpravy týmů
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="refereeEnabled" value="checked" th:checked="${settings.isRefereeEnabled()}" /> Zapnout hodnocení
+					</label>
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
 	</div>
 
 </div>

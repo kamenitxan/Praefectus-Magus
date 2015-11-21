@@ -6,9 +6,9 @@
 				<select name="rok" size="1"  onchange="if(this.value != 0) { this.form.submit(); }">
 					<option value="" th:each="t : ${years}" th:text="${t.year}" th:value="${t.year}" th:selected="${t.year == selected}"></option>
 				</select>
-				<input type="hidden" th:value="${schoolId}" name="schoolId"/>
+				<input type="hidden" th:value="${schoolId}" name="schoolId" />
 			</form>
-			<a class="btn btn-default" href="/tymy/pridat" role="button">Přidat tým</a><br /><br />
+			<a class="btn btn-default" href="/tymy/pridat" role="button" th:if="${canAdd}">Přidat tým</a><br /><br />
 			<form action="/tymy" method="post" >
 				<input type="hidden" th:value="${teams.size()}" name="pocet" />
 				<input type="hidden" th:value="${selected}" name="rok"/>
@@ -22,6 +22,7 @@
 							<td>Název pokusu</td>
 							<td>Potřebné pomůcky a chemikálie</td>
 							<td>Zajistit oběd</td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,12 +50,13 @@
 									<span th:if="${team.isLunch()}">Ano</span>
 									<span th:if="${!team.isLunch()}">Ne</span>
 								</td>
+								<td><a th:href="${'/tymy/smazat?id=' + team.getId()}" class="btn btn-danger">Smazat</a> </td>
 							</tr>
 
 
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-default" value="Upravit pořadí"/><br /><br />
+				<input type="submit" class="btn btn-default" value="Upravit pořadí" th:if="${canAdd}"/><br /><br />
 			</form>
 			<a th:href="${'/tymy/tisk?rok=' + selected}" class="btn btn-default" >Tisk výsledkové listiny</a>
 		</div>

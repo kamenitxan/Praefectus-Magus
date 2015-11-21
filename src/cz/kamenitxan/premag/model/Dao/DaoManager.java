@@ -5,10 +5,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import cz.kamenitxan.premag.model.Participant;
-import cz.kamenitxan.premag.model.School;
-import cz.kamenitxan.premag.model.Team;
-import cz.kamenitxan.premag.model.User;
+import cz.kamenitxan.premag.model.*;
 
 import java.sql.SQLException;
 
@@ -21,6 +18,7 @@ public class DaoManager {
 	private static Dao<School, Integer> schoolDao = null;
 	private static Dao<Team, Integer> teamDao = null;
 	private static Dao<Participant, Integer> participantDao = null;
+	private static Dao<Settings, Integer> settingsDao = null;
 
 	static {
 		try {
@@ -46,6 +44,10 @@ public class DaoManager {
 			if (!participantDao.isTableExists()) {
 				TableUtils.createTable(connectionSource, Participant.class);
 			}
+			settingsDao = com.j256.ormlite.dao.DaoManager.createDao(connectionSource, Settings.class);
+			if (!settingsDao.isTableExists()) {
+				TableUtils.createTable(connectionSource, Settings.class);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -65,5 +67,9 @@ public class DaoManager {
 
 	public static Dao<Participant, Integer> getParticipantDao() {
 		return participantDao;
+	}
+
+	public static Dao<Settings, Integer> getSettingsDao() {
+		return settingsDao;
 	}
 }

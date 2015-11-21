@@ -1,10 +1,7 @@
 package cz.kamenitxan.premag.view;
 
+import cz.kamenitxan.premag.model.*;
 import cz.kamenitxan.premag.model.Dao.DaoManager;
-import cz.kamenitxan.premag.model.Participant;
-import cz.kamenitxan.premag.model.School;
-import cz.kamenitxan.premag.model.Team;
-import cz.kamenitxan.premag.model.User;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -33,10 +30,16 @@ public class Teams {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		boolean canAdd = false;
+		if (SettingHelper.isTeamsEdit() && Integer.valueOf(yearS) == Calendar.getInstance().get(Calendar.YEAR)) {
+			canAdd = true;
+		}
+
 		data.put("teams", teams);
 		data.put("years", years);
 		data.put("selected", yearS);
 		data.put("menu", User.getMenuItems(request));
+		data.put("canAdd", canAdd);
 		return new ModelAndView(data, "teams");
 	}
 
@@ -140,6 +143,21 @@ public class Teams {
 		return new ModelAndView(data, "teamsAdd");
 	}
 
+	public static ModelAndView teamDeleteGet(Request request, Response response) {
+		String id = request.queryParams("id");
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+
+		try {
+			Team team = DaoManager.getTeamDao().queryForId(Integer.valueOf(id));
+			if (team.getYear() == year) {
+				DaoManager.getTeamDao().delete(team);
+			}
+		} catch (SQLException | NumberFormatException ignored) {
+
+		}
+
+		return teamListGet(request, response);
+	}
 
 	/** RESULTS *******************************************************************************************************/
 

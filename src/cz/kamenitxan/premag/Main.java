@@ -32,12 +32,14 @@ public class Main {
 		post("/tymy/pridat", Teams::teamAddPost, new MyTemplateEngine());
 		get("/tymy", Teams::teamListGet, new MyTemplateEngine());
 		post("/tymy", Teams::teamListPost, new MyTemplateEngine());
+		get("/tymy/smazat", Teams::teamDeleteGet, new MyTemplateEngine());
 		get("/tymy/tisk", Teams::teamPrintGet, new MyTemplateEngine());
 
 		get("/vysledky/:year", Teams::resultListGet, new MyTemplateEngine());
 		get("/vysledky", Teams::resultListGet, new MyTemplateEngine());
 
 		get("/admin", Admin::dashboardGet, new MyTemplateEngine());
+		post("/admin", Admin::dashboardPost, new MyTemplateEngine());
 		get("/admin/uzivatele", Admin::usersGet, new MyTemplateEngine());
 		get("/admin/uzivatele/smazat", Admin::userDeleteGet, new MyTemplateEngine());
 		get("/admin/uzivatele/tymy", Admin::userTeamsGet, new MyTemplateEngine());
