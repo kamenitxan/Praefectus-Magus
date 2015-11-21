@@ -67,7 +67,7 @@ public class Login {
 	public static boolean isProtected(Request request) {
 		String path = request.pathInfo();
 		System.out.println(request.pathInfo());
-		if (path.equals("/") || path.equals("/registrace") || path.contains("/static")) {
+		if (path.equals("/") || path.equals("/registrace") || path.equals("/zapomenute") || path.contains("/static")) {
 			return false;
 		} else {
 			return true;

@@ -1,6 +1,8 @@
 package cz.kamenitxan.premag.view;
 
+import cz.kamenitxan.premag.Logins;
 import cz.kamenitxan.premag.model.Dao.DaoManager;
+import cz.kamenitxan.premag.model.Email;
 import cz.kamenitxan.premag.model.School;
 import cz.kamenitxan.premag.model.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -9,9 +11,11 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Created by Kamenitxan (kamenitxan@me.com) on 08.09.15.
@@ -59,6 +63,48 @@ public class Register {
 		try {
 			DaoManager.getSchoolDao().create(school);
 			data.put("mgs", new ArrayList<String>(){{add("Účet by úšpěšně vytvořen. ");}});
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return new ModelAndView(data, "index");
+	}
+
+	public static ModelAndView forgotGet(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		return new ModelAndView(data, "registrationForgot");
+	}
+
+	public static ModelAndView forgotPost(Request request, Response response) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("mgs", new ArrayList<String>(){{add("Nové heslo vytvořeno a zasláno na váš email. ");}});
+		String userEmail = request.queryParams("email");
+		User user = null;
+		try {
+			user = DaoManager.getUserDao().queryBuilder().where().eq("email", userEmail).queryForFirst();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (user == null) {
+			return new ModelAndView(data, "index");
+		}
+		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		StringBuilder salt = new StringBuilder();
+		Random rnd = new Random();
+		while (salt.length() < 18) {
+			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+			salt.append(SALTCHARS.charAt(index));
+		}
+		String saltStr = salt.toString();
+		System.out.println(saltStr);
+		String hashed = BCrypt.hashpw(saltStr, BCrypt.gensalt());
+		user.setPassword(hashed);
+
+		try {
+			DaoManager.getUserDao().update(user);
+			sendMail(new Email("tomaspavel@me.com", "Nové heslo", "Vaše heslo na pokuston.kamus.cz bylo zresetováno. Vaše nové heslo je \"" + saltStr + "\". Doporučujeme ho ihned po příhlášní změnit."));
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,4 +171,40 @@ public class Register {
 
 		return new ModelAndView(data, "index");
 	}*/
+
+	public static void sendMail(Email email){
+		InternetAddress[] recipient = null;
+		try {
+
+				recipient = InternetAddress.parse(email.recipient);
+			} catch (AddressException ex) {
+			ex.printStackTrace();
+		}
+
+		Properties props = new Properties();
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "mail.kamus.cz");
+		props.put("mail.smtp.port", "465");
+
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(Logins.getMailUser(), Logins.getMainPass());
+					}
+				});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("pokuston@kamus.cz"));
+			message.setRecipients(Message.RecipientType.TO, recipient);
+			message.setSubject(email.subject);
+			message.setText(email.text);
+
+			Transport.send(message);
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

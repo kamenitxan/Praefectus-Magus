@@ -21,6 +21,8 @@ public class Main {
 
 		get("/", Login::indexViewGet, new MyTemplateEngine());
 		post("/", Login::indexViewPost, new MyTemplateEngine());
+		get("/zapomenute", Register::forgotGet, new MyTemplateEngine());
+		post("/zapomenute", Register::forgotPost, new MyTemplateEngine());
 		get("/registrace", Register::userRegisterViewGet, new MyTemplateEngine());
 		post("/registrace", Register::userRegisterViewPost, new MyTemplateEngine());
 		get("/logout", Login::logOutViewGet, new MyTemplateEngine());
