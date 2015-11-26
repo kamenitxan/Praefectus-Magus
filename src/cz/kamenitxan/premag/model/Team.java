@@ -10,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Team {
 	@DatabaseField(generatedId = true)
 	private int id = 0;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private School school;
 	@DatabaseField(foreign = true, foreignAutoRefresh = true)
 	private Participant participant1;

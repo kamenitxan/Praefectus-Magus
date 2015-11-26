@@ -104,6 +104,7 @@ public class Register {
 		try {
 			DaoManager.getUserDao().update(user);
 			sendMail(new Email(user.getEmail(), "Nové heslo", "Vaše heslo na pokuston.kamus.cz bylo zresetováno. Vaše nové heslo je \"" + saltStr + "\". Doporučujeme ho ihned po příhlášní změnit."));
+			//sendMail(new Email("tomaspavel@me.com", "Nové heslo", "Vaše heslo na pokuston.kamus.cz bylo zresetováno. Vaše nové heslo je \"" + saltStr + "\". Doporučujeme ho ihned po příhlášní změnit."));
 
 		} catch (SQLException e) {
 			e.printStackTrace();

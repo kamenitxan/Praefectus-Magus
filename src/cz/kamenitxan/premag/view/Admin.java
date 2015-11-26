@@ -6,10 +6,17 @@ import cz.kamenitxan.premag.model.SettingHelper;
 import cz.kamenitxan.premag.model.Team;
 import cz.kamenitxan.premag.model.User;
 import cz.kamenitxan.premag.model.Settings;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import spark.Spark;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -126,4 +133,53 @@ public class Admin {
 		data.put("menu", User.getMenuItems(request));
 		return new ModelAndView(data, "admin/participants");
 	}
+
+	public static Object teamsDownloadGet(Request request, Response response) {
+		HttpServletResponse raw = response.raw();
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			response.raw().setContentType("application/octet-stream");
+			response.raw().setHeader("Content-Disposition", "attachment; filename=tymy.xlsx");
+
+			Workbook wb = new XSSFWorkbook();
+			Sheet s = wb.createSheet();
+			int yearS =Calendar.getInstance().get(Calendar.YEAR);
+			List<Team> teams = DaoManager.getTeamDao().queryBuilder().where().eq("year", yearS).query();
+			Row r = s.createRow(0);
+			r.createCell(0).setCellValue("Soutěžící 1");
+			r.createCell(1).setCellValue("Soutěžící 2");
+			r.createCell(2).setCellValue("Pokus");
+			r.createCell(3).setCellValue("Škola");
+			r.createCell(4).setCellValue("Oběd");
+			for (int rownum = 0; rownum < teams.size(); rownum++) {
+				Team team = teams.get(rownum);
+				r = s.createRow(rownum+1);
+				r.createCell(0).setCellValue(team.getParticipant1().getName());
+				r.createCell(1).setCellValue(team.getParticipant2().getName());
+				r.createCell(2).setCellValue(team.getExperiment());
+				r.createCell(3).setCellValue(team.getSchool().getName());
+				String lunch = team.isLunch() ? "Ano" : "Ne";
+				r.createCell(4).setCellValue(lunch);
+			}
+
+			wb.write(out);
+			out.close();
+
+			byte[] bytes = out.toByteArray();
+
+
+
+			raw.getOutputStream().write(bytes);
+			raw.getOutputStream().flush();
+			raw.getOutputStream().close();
+
+
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Spark.halt(501, "Chyba serveru");
+		}
+		return response.raw();
+	}
+
 }
