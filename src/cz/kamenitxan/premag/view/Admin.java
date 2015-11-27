@@ -146,20 +146,24 @@ public class Admin {
 			int yearS =Calendar.getInstance().get(Calendar.YEAR);
 			List<Team> teams = DaoManager.getTeamDao().queryBuilder().where().eq("year", yearS).query();
 			Row r = s.createRow(0);
-			r.createCell(0).setCellValue("Soutěžící 1");
-			r.createCell(1).setCellValue("Soutěžící 2");
-			r.createCell(2).setCellValue("Pokus");
-			r.createCell(3).setCellValue("Škola");
-			r.createCell(4).setCellValue("Oběd");
+			r.createCell(0).setCellValue("Jméno 1");
+			r.createCell(1).setCellValue("Příjmení 1");
+			r.createCell(2).setCellValue("Jméno 2");
+			r.createCell(3).setCellValue("Příjmení 2");
+			r.createCell(4).setCellValue("Pokus");
+			r.createCell(5).setCellValue("Škola");
+			r.createCell(6).setCellValue("Oběd");
 			for (int rownum = 0; rownum < teams.size(); rownum++) {
 				Team team = teams.get(rownum);
 				r = s.createRow(rownum+1);
-				r.createCell(0).setCellValue(team.getParticipant1().getName());
-				r.createCell(1).setCellValue(team.getParticipant2().getName());
-				r.createCell(2).setCellValue(team.getExperiment());
-				r.createCell(3).setCellValue(team.getSchool().getName());
+				r.createCell(0).setCellValue(team.getParticipant1().getFirstName());
+				r.createCell(1).setCellValue(team.getParticipant1().getLastName());
+				r.createCell(2).setCellValue(team.getParticipant2().getFirstName());
+				r.createCell(3).setCellValue(team.getParticipant2().getLastName());
+				r.createCell(4).setCellValue(team.getExperiment());
+				r.createCell(5).setCellValue(team.getSchool().getName());
 				String lunch = team.isLunch() ? "Ano" : "Ne";
-				r.createCell(4).setCellValue(lunch);
+				r.createCell(6).setCellValue(lunch);
 			}
 
 			wb.write(out);

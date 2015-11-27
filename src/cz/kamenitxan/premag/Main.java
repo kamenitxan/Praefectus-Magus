@@ -1,6 +1,8 @@
 package cz.kamenitxan.premag;
 
 import cz.kamenitxan.premag.view.*;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import templates.MyTemplateEngine;
 
 import static spark.Spark.*;
