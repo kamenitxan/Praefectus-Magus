@@ -151,8 +151,9 @@ public class Admin {
 			r.createCell(2).setCellValue("Jméno 2");
 			r.createCell(3).setCellValue("Příjmení 2");
 			r.createCell(4).setCellValue("Pokus");
-			r.createCell(5).setCellValue("Škola");
-			r.createCell(6).setCellValue("Oběd");
+			r.createCell(5).setCellValue("Pomůcky");
+			r.createCell(6).setCellValue("Škola");
+			r.createCell(7).setCellValue("Oběd");
 			for (int rownum = 0; rownum < teams.size(); rownum++) {
 				Team team = teams.get(rownum);
 				r = s.createRow(rownum+1);
@@ -161,9 +162,10 @@ public class Admin {
 				r.createCell(2).setCellValue(team.getParticipant2().getFirstName());
 				r.createCell(3).setCellValue(team.getParticipant2().getLastName());
 				r.createCell(4).setCellValue(team.getExperiment());
-				r.createCell(5).setCellValue(team.getSchool().getName());
+				r.createCell(5).setCellValue(team.getRequirments());
+				r.createCell(6).setCellValue(team.getSchool().getName());
 				String lunch = team.isLunch() ? "Ano" : "Ne";
-				r.createCell(6).setCellValue(lunch);
+				r.createCell(7).setCellValue(lunch);
 			}
 
 			wb.write(out);
