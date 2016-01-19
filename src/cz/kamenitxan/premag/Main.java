@@ -7,8 +7,11 @@ import static spark.Spark.*;
 
 public class Main {
 	public static void main(String[] args) {
+		Login.auth("kame2", "aaa*");
+		Login.auth("kame2", "ujhasd");
+
 		port(4568);
-        staticFileLocation("/templates/resources");
+		staticFileLocation("/templates/resources");
 
 		before((request, response) -> {
 			if (Login.isProtected(request)) {
@@ -50,5 +53,5 @@ public class Main {
 
 		// https://gist.github.com/Wilfred/715ae4e22642cfff1dbd templaty
 
-    }
+	}
 }

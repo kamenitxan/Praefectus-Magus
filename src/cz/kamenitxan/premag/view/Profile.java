@@ -23,9 +23,12 @@ public class Profile {
 		Map<String, Object> data = new HashMap<>();
 		School school = null;
 		try {
-			school = DaoManager.getSchoolDao().queryBuilder().where().eq("email", request.session().attribute("useremail")).queryForFirst();
+			school = DaoManager.getSchoolDao().queryBuilder().where().eq("email", "a@a.cz").queryForFirst();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		if (school == null) {
+			school = new School() {{setName("test jmeno");}};
 		}
 		data.put("school", school);
 		data.put("menu", User.getMenuItems(request));
